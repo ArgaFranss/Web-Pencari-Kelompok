@@ -1,0 +1,180 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f7f5f2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    /* Padding atas dikurangi karena sudah digantikan oleh gambar */
+    padding: 0 30px 25px 30px; 
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(101, 67, 33, 0.06); 
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    border-top: 5px solid #654321;
+    overflow: hidden; /* Penting: memotong ujung gambar agar ikut melengkung */
+}
+
+/* Style khusus untuk banner header jpeg mobile view */
+.header-image {
+    width: calc(100% + 60px); /* Melebarkan gambar menembus padding container */
+    margin-left: -30px; /* Menarik gambar ke ujung kiri container */
+    height: auto;
+    max-height: 160px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.header-tag {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #8B5A2B; 
+    margin-bottom: 4px;
+}
+
+h2 {
+    color: #4A3525; 
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.subtitle {
+    color: #6C584C; 
+    font-size: 13px;
+    margin-bottom: 26px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #4A3525;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #D6CCC2; 
+    border-radius: 8px;
+    font-size: 15px;
+    color: #4A3525;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+    border-color: #8B5A2B;
+    box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.15);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    background-color: #654321; 
+    color: #ffffff;
+    border: none;
+    padding: 13px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #4A3525;
+}
+
+button:disabled {
+    background-color: #D6CCC2;
+    color: #6C584C;
+    cursor: not-allowed;
+}
+
+.loading {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #6C584C;
+    text-align: center;
+    font-style: italic;
+}
+
+.output-box {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #F5EBE6; 
+    border: 1px solid #E6CCB2;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.output-box h4 {
+    color: #7F5539;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.result-text {
+    color: #6C584C;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+#kelompokResult {
+    color: #654321;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.error-box {
+    background-color: #FFF2F2 !important;
+    border: 1px solid #FCA5A5 !important;
+}
+
+.error-box h4 {
+    color: #991B1B !important;
+}
+
+.error-box #kelompokResult {
+    color: #DC2626 !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+.credit {
+    text-align: center;
+    font-size: 11px;
+    color: #B7B7A4;
+    margin-top: 25px;
+    letter-spacing: 0.03em;
+}
+
+.hidden {
+    display: none !important;
+}
