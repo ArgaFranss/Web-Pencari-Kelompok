@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,7 +7,7 @@
 }
 
 body {
-    background-color: #f7f5f2; 
+    background-color: #f7f5f2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,21 +17,20 @@ body {
 
 .container {
     background: #ffffff;
-    /* Padding atas dikurangi karena sudah digantikan oleh gambar */
-    padding: 0 30px 25px 30px; 
+    padding: 0 30px 25px 30px;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(101, 67, 33, 0.06); 
+    box-shadow: 0 10px 25px rgba(101, 67, 33, 0.06);
     width: 100%;
     max-width: 400px;
     position: relative;
     border-top: 5px solid #654321;
-    overflow: hidden; /* Penting: memotong ujung gambar agar ikut melengkung */
+    overflow: hidden;
 }
 
-/* Style khusus untuk banner header jpeg mobile view */
+/* Banner Header */
 .header-image {
-    width: calc(100% + 60px); /* Melebarkan gambar menembus padding container */
-    margin-left: -30px; /* Menarik gambar ke ujung kiri container */
+    width: calc(100% + 60px);
+    margin-left: -30px;
     height: auto;
     max-height: 160px;
     object-fit: cover;
@@ -43,25 +43,27 @@ body {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.15em;
-    color: #8B5A2B; 
+    color: #8B5A2B;
     margin-bottom: 4px;
 }
 
+/* Judul */
 h2 {
-    color: #4A3525; 
+    color: #4A3525;
     margin-bottom: 6px;
     text-align: center;
     font-size: 24px;
 }
 
 .subtitle {
-    color: #6C584C; 
+    color: #6C584C;
     font-size: 13px;
     margin-bottom: 26px;
     text-align: center;
     line-height: 1.4;
 }
 
+/* Form */
 .form-group {
     margin-bottom: 18px;
 }
@@ -74,10 +76,11 @@ label {
     font-size: 14px;
 }
 
-input[type="text"], input[type="date"] {
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 11px 12px;
-    border: 1px solid #D6CCC2; 
+    border: 1px solid #D6CCC2;
     border-radius: 8px;
     font-size: 15px;
     color: #4A3525;
@@ -85,15 +88,21 @@ input[type="text"], input[type="date"] {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input[type="text"]:focus, input[type="date"]:focus {
+input[type="text"]:focus,
+input[type="number"]:focus {
     border-color: #8B5A2B;
     box-shadow: 0 0 0 3px rgba(139, 90, 43, 0.15);
     outline: none;
 }
 
+input::placeholder {
+    color: #B7A99B;
+}
+
+/* Tombol */
 button {
     width: 100%;
-    background-color: #654321; 
+    background-color: #654321;
     color: #ffffff;
     border: none;
     padding: 13px;
@@ -115,6 +124,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* Loading */
 .loading {
     margin-top: 15px;
     font-size: 13px;
@@ -123,10 +133,11 @@ button:disabled {
     font-style: italic;
 }
 
+/* Hasil Pencarian */
 .output-box {
     margin-top: 25px;
     padding: 20px;
-    background-color: #F5EBE6; 
+    background-color: #F5EBE6;
     border: 1px solid #E6CCB2;
     border-radius: 10px;
     text-align: center;
@@ -140,18 +151,45 @@ button:disabled {
     letter-spacing: 0.08em;
 }
 
-.result-text {
-    color: #6C584C;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
+/* Nama Kelompok */
 #kelompokResult {
     color: #654321;
     font-size: 30px;
     font-weight: 800;
+    margin-top: 5px;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
 }
 
+/* Informasi Peserta */
+.participant-info {
+    margin-top: 20px;
+    text-align: left;
+    border-top: 1px solid #D6CCC2;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 11px 0;
+    border-bottom: 1px solid #E6CCB2;
+}
+
+.info-row span {
+    color: #8B5A2B;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.info-row strong {
+    color: #4A3525;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+/* Error */
 .error-box {
     background-color: #FFF2F2 !important;
     border: 1px solid #FCA5A5 !important;
@@ -165,8 +203,14 @@ button:disabled {
     color: #DC2626 !important;
     font-size: 15px !important;
     font-weight: 500 !important;
+    text-transform: none;
 }
 
+.error-box .participant-info {
+    display: none;
+}
+
+/* Credit */
 .credit {
     text-align: center;
     font-size: 11px;
@@ -175,6 +219,37 @@ button:disabled {
     letter-spacing: 0.03em;
 }
 
+/* Hidden */
 .hidden {
     display: none !important;
+}
+
+/* Responsive Mobile */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 0 22px 22px 22px;
+        max-width: 100%;
+    }
+
+    .header-image {
+        width: calc(100% + 44px);
+        margin-left: -22px;
+        max-height: 145px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    #kelompokResult {
+        font-size: 26px;
+    }
+
+    .output-box {
+        padding: 16px;
+    }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,89 +10,223 @@
 <body>
 
     <div class="container">
-        <!-- Gambar Banner Header Mobil View -->
+
         <img src="header.jpeg" alt="HOMS 2026 Banner" class="header-image">
 
         <div class="header-tag">HOMS 2026</div>
+
         <h2>Cek Kelompok</h2>
-        <p class="subtitle">Masukkan data Anda untuk melihat pembagian kelompok pasar.</p>
-        
+
+        <p class="subtitle">
+            Masukkan data Anda untuk melihat pembagian kelompok pasar.
+        </p>
+
         <form id="cekKelompokForm">
+
             <div class="form-group">
-                <label for="namaLengkap">Nama Lengkap</label>
-                <input type="text" id="namaLengkap" placeholder="Contoh: Rafael Pandu Amartya" required>
+                <label for="namaPanggilan">Nama Panggilan</label>
+                <input
+                    type="text"
+                    id="namaPanggilan"
+                    placeholder="Contoh: Rafael"
+                    required
+                >
             </div>
 
             <div class="form-group">
-                <label for="tanggalLahir">Tanggal Lahir</label>
-                <input type="date" id="tanggalLahir" required>
+                <label for="umur">Umur</label>
+                <input
+                    type="number"
+                    id="umur"
+                    placeholder="Contoh: 18"
+                    min="1"
+                    max="100"
+                    required
+                >
             </div>
 
-            <button type="submit" id="submitBtn">Cari Kelompok</button>
+            <button type="submit" id="submitBtn">
+                Cari Kelompok
+            </button>
+
         </form>
 
-        <div id="loading" class="loading hidden">Sedang mencari data di Google Sheets...</div>
-        
-        <div id="outputContainer" class="output-box hidden">
-            <h4>Hasil Pencarian</h4>
-            <p class="result-text">Anda masuk ke dalam kelompok:</p>
-            <h1 id="kelompokResult">Nama Kelompok</h1>
+        <div id="loading" class="loading hidden">
+            Sedang mencari data di Google Sheets...
         </div>
 
-        <div class="credit">Created by Reiki</div>
+        <div id="outputContainer" class="output-box hidden">
+
+            <h4>Hasil Pencarian</h4>
+
+            <div id="resultContent">
+
+                <h1 id="kelompokResult">KELOMPOK</h1>
+
+                <div class="participant-info">
+
+                    <div class="info-row">
+                        <span>Nama Lengkap</span>
+                        <strong id="namaLengkapResult">-</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Nama Panggilan</span>
+                        <strong id="namaPanggilanResult">-</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Umur</span>
+                        <strong id="umurResult">-</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>No. Telepon</span>
+                        <strong id="teleponResult">-</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <span>Asal Gereja</span>
+                        <strong id="gerejaResult">-</strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="credit">
+            Created by Reiki
+        </div>
+
     </div>
 
+    <!-- Konfigurasi Webhook -->
+    <script src="config.js"></script>
+
     <script>
+
         document.getElementById('cekKelompokForm').addEventListener('submit', async function(e) {
+
             e.preventDefault();
-            
-            const nama = document.getElementById('namaLengkap').value.trim();
-            const tglLahir = document.getElementById('tanggalLahir').value;
-            
+
+            // Mengambil input pengguna
+            const namaPanggilan = document
+                .getElementById('namaPanggilan')
+                .value
+                .trim();
+
+            const umur = Number(
+                document.getElementById('umur').value
+            );
+
+            // Mengambil elemen HTML
             const submitBtn = document.getElementById('submitBtn');
             const loading = document.getElementById('loading');
             const outputContainer = document.getElementById('outputContainer');
+
             const kelompokResult = document.getElementById('kelompokResult');
+            const namaLengkapResult = document.getElementById('namaLengkapResult');
+            const namaPanggilanResult = document.getElementById('namaPanggilanResult');
+            const umurResult = document.getElementById('umurResult');
+            const teleponResult = document.getElementById('teleponResult');
+            const gerejaResult = document.getElementById('gerejaResult');
 
-            const N8N_WEBHOOK_URL = 'https://n8n.srv853778.hstgr.cloud/webhook/18c1ea48-2194-42ef-9028-79a58fe79ee5';
-
+            // Menampilkan loading
             submitBtn.disabled = true;
             loading.classList.remove('hidden');
             outputContainer.classList.add('hidden');
             outputContainer.classList.remove('error-box');
 
             try {
+
+                // Memeriksa konfigurasi webhook
+                if (
+                    typeof N8N_WEBHOOK_URL === 'undefined' ||
+                    !N8N_WEBHOOK_URL
+                ) {
+                    throw new Error(
+                        'URL Webhook tidak ditemukan. Periksa config.js'
+                    );
+                }
+
+                // Mengirim data ke n8n
                 const response = await fetch(N8N_WEBHOOK_URL, {
+
                     method: 'POST',
+
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ 
-                        nama_lengkap: nama,
-                        tanggal_lahir: tglLahir 
+
+                    body: JSON.stringify({
+                        nama_panggilan: namaPanggilan,
+                        umur: umur
                     })
+
                 });
 
-                if (!response.ok) throw new Error('Gagal terhubung ke server n8n');
-
-                const data = await response.json();
-                
-                if (data.kelompok) {
-                    kelompokResult.innerText = data.kelompok;
-                    outputContainer.classList.remove('hidden');
-                } else {
-                    throw new Error(data.message || 'Data tidak ditemukan atau kelompok belum diacak.');
+                // Memeriksa respons server
+                if (!response.ok) {
+                    throw new Error(
+                        'Gagal terhubung ke server n8n.'
+                    );
                 }
 
+                // Mengambil hasil response JSON
+                const data = await response.json();
+
+                console.log('Output Webhook:', data);
+
+                // Memeriksa apakah kelompok tersedia
+                if (!data.kelompok) {
+                    throw new Error(
+                        data.message ||
+                        'Kelompok peserta belum ditentukan atau data tidak ditemukan.'
+                    );
+                }
+
+                // Menampilkan hasil pencarian
+                kelompokResult.innerText = data.kelompok;
+
+                namaLengkapResult.innerText =
+                    data.nama_lengkap || '-';
+
+                namaPanggilanResult.innerText =
+                    data.nama_panggilan || namaPanggilan;
+
+                umurResult.innerText =
+                    data.umur ? data.umur + ' Tahun' : '-';
+
+                teleponResult.innerText =
+                    data.no_telepon || '-';
+
+                gerejaResult.innerText =
+                    data.asal_gereja || '-';
+
+                // Menampilkan hasil
+                outputContainer.classList.remove('hidden');
+
             } catch (error) {
+
+                // Menampilkan pesan kesalahan
                 kelompokResult.innerText = error.message;
+
                 outputContainer.classList.add('error-box');
                 outputContainer.classList.remove('hidden');
+
+                console.error('Error:', error);
+
             } finally {
+
+                // Mengembalikan tombol dan loading
                 submitBtn.disabled = false;
                 loading.classList.add('hidden');
+
             }
+
         });
+
     </script>
+
 </body>
 </html>
